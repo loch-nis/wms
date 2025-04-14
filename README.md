@@ -1,4 +1,4 @@
-# WarehouseManagementSystem
+# Warehouse Management System (WMS)
 
 With a Laravel backend and an Angular frontend.
 
