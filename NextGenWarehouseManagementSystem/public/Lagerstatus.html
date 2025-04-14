@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="styles.css">
+    <title>Lagerstatus</title>
+    <h1>Lagerbeholdning</h1>
+</head>
+<body class = "Lagerstatus">
+    <a href="test.html" id="logo"> <picture>Firmalogo</picture></a>
+    <div class="ware-table">
+    <table>
+        <tr>
+            <th>Produkt</th>
+            <th>Antal</th>
+            <th>Placering</th>
+            <th>Pris</th>
+            <th>Kategori</th>
+        </tr>
+    </table>
+</div>
+
+</body>
+<script>
+    fetch('api/wares').then(response => response.json()).then(wares => {
+        const tableBody = document.querySelector('.ware-table');
+        wares.forEach(
+            ware => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${ware.id}</td>
+                    <td>${ware.barcode}</td>
+                    <td>${ware.quantity}</td>
+                    <td>${ware.price}</td>
+                    <td>${ware.placement_id}</td>
+                `;
+                tableBody.appendChild(row);
+            }
+        )
+    }).catch(error => console.error('Error getting ware data: ', error));
+
+</script>
+<footer>
+    <a href="test.html" id="logo"> <button>Afslut</button>></a>
+    </footer>
+</html>
