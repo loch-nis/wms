@@ -1,0 +1,26 @@
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Barcode</th>
+            <th>Price</th>
+            <th>Quantity</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let ware of wares">
+            <!-- <td><app-ware-item [ware] = "ware"></app-ware-item></td> -->
+            <td>{{ ware.name }}</td>
+            <td>{{ ware.barcode }}</td>
+            <td> ${{ ware.price }}</td>
+            <td>{{ ware.quantity }}</td>
+            <td> <app-update-ware-form 
+                [forStoring]="false"
+                [barcode]="ware.barcode"
+                ></app-update-ware-form> </td>
+        </tr>
+    </tbody>
+</table>
+<div *ngIf="wares.length == 0">
+    No wares found in database. Possible error.
+</div>

@@ -1,0 +1,55 @@
+<div class="form-container">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+  
+      <div class="form-field">
+        <label for="barcode">Barcode:</label>
+        <input
+          type="text"
+          id="barcode"
+          formControlName="barcode"
+        />
+      </div>
+  
+      <div class="form-field">
+        <label for="name">Name:</label>
+        <input
+          type="text"
+          id="name"
+          formControlName="name"
+        />
+      </div>
+  
+      <div class="form-field">
+        <label for="price">Price:</label>
+        <input
+          type="number"
+          id="price"
+          formControlName="price"
+          step="0.1"
+        />
+      </div>
+  
+      <div class="form-field">
+        <label for="placement_id">Placement:</label>
+        <select id="placement_id" formControlName="placement_id">
+        <option value="" disabled>Select placement</option>
+        <option *ngFor="let p of placementOptions" [value]="p">{{ p }}</option>
+        </select>
+      </div>
+  
+      <div class="form-field">
+        <label for="quantity">Quantity:</label>
+        <input
+          type="number"
+          id="quantity"
+          formControlName="quantity"
+          min="0"
+        />
+      </div>
+  
+      <button type="submit">
+        Create ware
+      </button>
+    </form>
+  </div>
+  

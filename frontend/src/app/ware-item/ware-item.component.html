@@ -1,0 +1,9 @@
+<div *ngIf="barcodeNotFound">
+    Ware with barcode "{{barcode}}" not found. Add it here:
+</div>
+<div *ngIf="ware">
+    Name: {{ ware.name }} <br>
+    Barcode: {{ ware.barcode }} <br>
+    Price: ${{ ware.price }} <br>
+    Quantity: {{ ware.quantity }} <br>
+</div>

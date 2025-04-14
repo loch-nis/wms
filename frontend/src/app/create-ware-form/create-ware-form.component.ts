@@ -1,0 +1,78 @@
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
+import { PostWareService } from './post-ware.service';
+import { CommonModule } from '@angular/common';
+import { TransferBarcodeValue } from '../barcode-form/transfer-barcode-value.service';
+import { WareListUpdateService } from '../ware-list/ware-list-update.service';
+import { Subscription } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
+
+
+@Component({
+  selector: 'app-create-ware-form',
+  imports: [ReactiveFormsModule, CommonModule],
+  templateUrl: './create-ware-form.component.html',
+  styleUrl: './create-ware-form.component.scss'
+})
+export class CreateWareFormComponent implements OnInit {
+  form: FormGroup;
+  placementOptions = [0, 1, 2, 3, 4];
+  private barcodeSubscription: Subscription | null = null;
+
+
+  constructor(
+    private formBuilder: FormBuilder,
+    private postWareService: PostWareService,
+    private transferBarcodeValue: TransferBarcodeValue,
+    private wareListUpdateService: WareListUpdateService,
+    private snackBar: MatSnackBar,
+  ) 
+  {
+    this.form = this.formBuilder.group({
+      barcode: ['', Validators.required],
+      name: ['', Validators.required],
+      price: [, [Validators.required, Validators.min(0)]],
+      placement_id: [0, Validators.required],
+      quantity: [0, [Validators.required, Validators.min(0)]],
+    });
+  }
+  
+  onSubmit()
+  {
+    if(this.form.invalid) return;
+
+    console.log(this.form.value);
+
+    this.postWareService.postFormData(this.form.value).subscribe(
+        (response) => {
+          
+          this.snackBar.open("New ware successfully created!", "Close", {
+            duration: 3000
+          });
+
+          this.wareListUpdateService.triggerUpdate();
+        }
+      );
+  }
+
+  ngOnInit(): void {
+      this.barcodeSubscription = this.transferBarcodeValue.barcodeValue$.subscribe((barcodeValue) => {
+        if (barcodeValue)
+          {
+            this.form.patchValue({
+              barcode: barcodeValue
+            });
+          }
+      });
+  }
+
+  // I did try with async pipe but that didn't work quite as intended,
+  // so I have to clean up the observable:
+  ngOnDestroy(): void {
+    if (this.barcodeSubscription) {
+      this.barcodeSubscription.unsubscribe();
+    }
+  }
+
+}

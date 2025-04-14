@@ -1,0 +1,14 @@
+<div class="form-container">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+        <div class="form-field">
+            <label for="barcode"></label>
+            <input
+            type="text"
+            id="barcode"
+            formControlName="barcode"
+            autofocus
+            />
+        </div>
+    </form>
+</div>
