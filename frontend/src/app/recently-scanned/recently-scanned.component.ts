@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UpdateRecentlyScannedService } from './update-recently-scanned.service';
+import { updateBarcode } from '../barcode-form/update-barcode.service';
 import { WareItemComponent } from "../ware-item/ware-item.component";
 import { CommonModule } from '@angular/common';
 import { CreateWareFormComponent } from "../create-ware-form/create-ware-form.component";
@@ -14,10 +14,10 @@ import { UpdateWareFormComponent } from "../update-ware-form/update-ware-form.co
 export class RecentlyScannedComponent implements OnInit{
   barcode : string | null = null;
 
-  constructor(private updateRecentlyScannedService : UpdateRecentlyScannedService) {}
+  constructor(private updateBarcode: updateBarcode) {}
   
   ngOnInit(): void {
-      this.updateRecentlyScannedService.barcode$.subscribe((barcode) => {
+      this.updateBarcode.barcode$.subscribe((barcode) => {
         this.barcode = barcode;
         console.log("Barcode updated in recently scanned to:", barcode)
       })

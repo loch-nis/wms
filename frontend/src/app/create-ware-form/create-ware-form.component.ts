@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { PostWareService } from './post-ware.service';
 import { CommonModule } from '@angular/common';
-import { TransferBarcodeValue } from '../barcode-form/transfer-barcode-value.service';
+import { updateBarcode } from '../barcode-form/update-barcode.service';
 import { WareListUpdateService } from '../ware-list/ware-list-update.service';
 import { Subscription } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -24,7 +24,7 @@ export class CreateWareFormComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private postWareService: PostWareService,
-    private transferBarcodeValue: TransferBarcodeValue,
+    private updateBarcode: updateBarcode,
     private wareListUpdateService: WareListUpdateService,
     private snackBar: MatSnackBar,
   ) 
@@ -57,11 +57,11 @@ export class CreateWareFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-      this.barcodeSubscription = this.transferBarcodeValue.barcodeValue$.subscribe((barcodeValue) => {
-        if (barcodeValue)
+      this.barcodeSubscription = this.updateBarcode.barcode$.subscribe((barcode) => {
+        if (barcode)
           {
             this.form.patchValue({
-              barcode: barcodeValue
+              barcode: barcode
             });
           }
       });

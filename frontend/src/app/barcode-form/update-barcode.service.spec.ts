@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { TransferBarcodeValue } from './transfer-barcode-value.service';
+import { updateBarcode } from './update-barcode.service';
 
 describe('TransferBarcodeValueToCreateWareFormService', () => {
-  let service: TransferBarcodeValue;
+  let service: updateBarcode;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(TransferBarcodeValue);
+    service = TestBed.inject(updateBarcode);
   });
 
   it('should be created', () => {
