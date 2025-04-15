@@ -4,7 +4,7 @@ import { BehaviorSubject } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class updateBarcode {
+export class UpdateBarcodeService {
 
   private barcodeSubject = new BehaviorSubject<string | null>(null);
   barcode$ = this.barcodeSubject.asObservable();

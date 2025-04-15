@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { PostWareService } from './post-ware.service';
+import { CreateWareService } from './create-ware.service';
 
 describe('PostWareService', () => {
-  let service: PostWareService;
+  let service: CreateWareService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(PostWareService);
+    service = TestBed.inject(CreateWareService);
   });
 
   it('should be created', () => {

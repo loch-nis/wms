@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
-import { updateBarcode } from './update-barcode.service';
+import { UpdateBarcodeService } from './update-barcode.service';
 import { debounceTime, filter } from 'rxjs';
 
 
@@ -17,7 +17,7 @@ export class BarcodeFormComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private updateBarcode: updateBarcode,
+    private updateBarcodeService: UpdateBarcodeService,
   )
   {
     this.form = this.formBuilder.group({
@@ -39,6 +39,6 @@ export class BarcodeFormComponent implements OnInit {
   {
     if(this.form.invalid) return;
 
-    this.updateBarcode.setBarcode(this.form.value.barcode);
+    this.updateBarcodeService.setBarcode(this.form.value.barcode);
   }
 }

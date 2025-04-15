@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
-import { PostWareService } from './post-ware.service';
+import { CreateWareService } from './create-ware.service';
 import { CommonModule } from '@angular/common';
-import { updateBarcode } from '../barcode-form/update-barcode.service';
+import { UpdateBarcodeService } from '../barcode-form/update-barcode.service';
 import { WareListUpdateService } from '../ware-list/ware-list-update.service';
 import { Subscription } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -23,8 +23,8 @@ export class CreateWareFormComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private postWareService: PostWareService,
-    private updateBarcode: updateBarcode,
+    private createWareService: CreateWareService,
+    private updateBarcodeService: UpdateBarcodeService,
     private wareListUpdateService: WareListUpdateService,
     private snackBar: MatSnackBar,
   ) 
@@ -44,7 +44,7 @@ export class CreateWareFormComponent implements OnInit {
 
     console.log(this.form.value);
 
-    this.postWareService.postFormData(this.form.value).subscribe(
+    this.createWareService.postFormData(this.form.value).subscribe(
         (response) => {
           
           this.snackBar.open("New ware successfully created!", "Close", {
@@ -57,7 +57,7 @@ export class CreateWareFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-      this.barcodeSubscription = this.updateBarcode.barcode$.subscribe((barcode) => {
+      this.barcodeSubscription = this.updateBarcodeService.barcode$.subscribe((barcode) => {
         if (barcode)
           {
             this.form.patchValue({

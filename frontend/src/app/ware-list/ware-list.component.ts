@@ -16,13 +16,13 @@ export class WareListComponent implements OnInit {
   wares: Ware[] = [];
 
   constructor(
-    private WareListService : WareListService,
+    private wareListService : WareListService,
     private wareListUpdateService: WareListUpdateService,
   ) {}
 
   loadWares() : void
   {
-    this.WareListService.getAllWares().subscribe((data) => {
+    this.wareListService.getAllWares().subscribe((data) => {
       this.wares = data;
       });
   }
