@@ -11,6 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
+        // todo should this be tied together with the categories? what are foreign keys?
         Schema::create('wares', function (Blueprint $table) {
             $table->id();
             $table->string('barcode');

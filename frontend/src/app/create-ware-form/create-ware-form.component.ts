@@ -27,7 +27,7 @@ export class CreateWareFormComponent implements OnInit {
     private updateBarcodeService: UpdateBarcodeService,
     private wareListUpdateService: WareListUpdateService,
     private snackBar: MatSnackBar,
-  ) 
+  )
   {
     this.form = this.formBuilder.group({
       barcode: ['', Validators.required],
@@ -37,7 +37,7 @@ export class CreateWareFormComponent implements OnInit {
       quantity: [0, [Validators.required, Validators.min(0)]],
     });
   }
-  
+
   onSubmit()
   {
     if(this.form.invalid) return;
@@ -46,7 +46,7 @@ export class CreateWareFormComponent implements OnInit {
 
     this.createWareService.postFormData(this.form.value).subscribe(
         (response) => {
-          
+
           this.snackBar.open("New ware successfully created!", "Close", {
             duration: 3000
           });
@@ -58,6 +58,7 @@ export class CreateWareFormComponent implements OnInit {
 
   ngOnInit(): void {
       this.barcodeSubscription = this.updateBarcodeService.barcode$.subscribe((barcode) => {
+        // todo should we filter this out of the observable stream instead?
         if (barcode)
           {
             this.form.patchValue({

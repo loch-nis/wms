@@ -7,19 +7,21 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Helpers;
 
+// todo how would we test all of this?
 class WareController extends Controller
 {
-
     public function store(Request $request) : JsonResponse
     {
+        // todo are there other ways to do validation?
         $validated = $request->validate([
                 'barcode' => 'required|string|max:255',
                 'name' => 'required|string|max:255',
                 'quantity' => 'required|integer|min:0',
-                'price' => 'required|numeric|min:0',
+                'price' => 'required|numeric|mobnn:0',
                 'placement_id' => 'required|integer|min:0',
         ]);
 
+        // todo should business logic live elsewhere? if so, how should it be structured?
         $ware = Ware::where('barcode', $validated['barcode'])->first();
 
         if($ware)
@@ -48,10 +50,15 @@ class WareController extends Controller
             'quantityDelta' => 'required|integer'
         ]);
 
+        // todo are there alternatives to first that might make this easier?
+        // todo what is middleware?
         $ware = Ware::where('barcode', $barcode)->first();
 
+        // todo early returns
         if($ware)
         {
+            // todo could this be easier to read?
+            // would intent be clearer if we introduced a new variable?
             if($ware->quantity + $request->quantityDelta >= 0)
             {
                 $ware->quantity += $request->quantityDelta;
@@ -68,6 +75,8 @@ class WareController extends Controller
             }
             else
             {
+                // todo is 409 the correct status code? 422
+                // todo is there a commonly used way of describing validation errors?
                 return response()->json(
                     [
                         'message' => 'Ware quantity is not high enough to pack the requested amount',
@@ -79,6 +88,7 @@ class WareController extends Controller
         }
         else
         {
+            // todo is there a commonly used way of describing validation errors?
             return response()->json(
                 [
                     'message' => 'Ware with requested barcode not found',
@@ -91,13 +101,14 @@ class WareController extends Controller
 
 
     //use case 3: Se lagerstatus
-    public function getAllWares() : JsonResponse
+    // todo do we need "AllWares" given the context?
+    public function getAll() : JsonResponse
     {
         $wares = Ware::all();
         return response()->json($wares);
     }
 
-    public function getWareByBarcode(Request $request, $barcode)
+    public function getByBarcode(Request $request, $barcode)
     {
         $ware = Ware::where('barcode', $barcode)->first();
 
