@@ -1,13 +1,15 @@
 <div *ngIf="barcode">
-    <app-ware-item 
-    [barcode]="barcode" 
+<!--    todo is this good practice to use a reference to the component?-->
+<!--  todo if not, what else would we do?-->
+    <app-ware-item
+    [barcode]="barcode"
     #wareItem
     ></app-ware-item>
     <div *ngIf="wareItem.barcodeNotFound">
         <app-create-ware-form></app-create-ware-form>
     </div>
     <div *ngIf="!wareItem.barcodeNotFound">
-        <app-update-ware-form 
+        <app-update-ware-form
         [forStoring]="true"
         [barcode]="barcode"
         ></app-update-ware-form>

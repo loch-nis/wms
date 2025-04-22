@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
+// todo how does this work? what is DI?
 class AppServiceProvider extends ServiceProvider
 {
     /**

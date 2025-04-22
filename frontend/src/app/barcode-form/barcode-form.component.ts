@@ -15,17 +15,21 @@ import { debounceTime, filter } from 'rxjs';
 export class BarcodeFormComponent implements OnInit {
   form: FormGroup;
 
+  // todo are there other ways to do DI in angular?
   constructor(
     private formBuilder: FormBuilder,
     private updateBarcodeService: UpdateBarcodeService,
   )
   {
+    // todo what is declarative code?
     this.form = this.formBuilder.group({
       barcode: ['',Validators.required]
     });
   }
 
   ngOnInit(): void {
+    // todo is null supression good? what alternatives do we have?
+    // todo are there other ways of getting controls in a form than .get('')?
       this.form.get('barcode')!.valueChanges.pipe(
         debounceTime(200),
         filter(() => this.form.valid)
@@ -35,6 +39,7 @@ export class BarcodeFormComponent implements OnInit {
   }
 
 
+  // todo is this a smart of a dumb component? what are pros and cons of the two?
   onSubmit()
   {
     if(this.form.invalid) return;

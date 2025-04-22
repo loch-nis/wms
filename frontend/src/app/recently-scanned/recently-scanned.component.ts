@@ -12,10 +12,12 @@ import { UpdateWareFormComponent } from "../update-ware-form/update-ware-form.co
   styleUrl: './recently-scanned.component.scss'
 })
 export class RecentlyScannedComponent implements OnInit{
+  // todo how does change detection work when we declare non-reactive variables?
+  // todo generally, use a signal when holding reactive variables
   barcode : string | null = null;
 
   constructor(private updateBarcodeService: UpdateBarcodeService) {}
-  
+
   ngOnInit(): void {
       this.updateBarcodeService.barcode$.subscribe((barcode) => {
         this.barcode = barcode;

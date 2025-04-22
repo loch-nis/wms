@@ -1,20 +1,23 @@
 <div class="form-container">
-    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
 
-        <div class="form-field">
-            <label for="quantity"></label>Quantity
-            <input
-            type="text"
-            id="quantity"
-            formControlName="quantity"
-            />
-        </div>
+    <div class="form-field">
+      <label for="quantity"></label>Quantity
+      <input
+        type="text"
+        id="quantity"
+        formControlName="quantity"
+      />
+    </div>
 
-        <button type="submit" *ngIf="forStoring">
-            Store ware
-        </button>
-        <button type="submit" *ngIf="!forStoring">
-            Pack ware
-        </button>
-    </form>
+    <!--      todo what's ngs new control flow syntax?-->
+    @if (forStoring) {
+      <button type="submit">
+        Store ware
+      </button>
+    }
+    <button type="submit" *ngIf="!forStoring">
+      Pack ware
+    </button>
+  </form>
 </div>

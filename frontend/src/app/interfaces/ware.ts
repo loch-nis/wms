@@ -1,3 +1,5 @@
+// todo how should we structure our code?
+// todo split by technical concerns vs features
 export interface Ware {
     id: number,
     barcode: string,

@@ -1,8 +1,10 @@
 <div class="form-container">
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
 
+<!--      todo how could we style this with tailwind?-->
         <div class="form-field">
             <label for="barcode"></label>
+<!--            todo what are template driven forms vs reactive forms?-->
             <input
             type="text"
             id="barcode"
