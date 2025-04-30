@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="styles.css">
+    <title>Lagerstatus</title>
+    <h1>Pakkevindue</h1>
+</head>
+
+<body class="Opmagasiner">
+    <a href="main.html" id="logo">
+        <picture>Firmalogo</picture>
+    </a>
+    <div class="Layout">
+        <textbox id="amountTextBox">Skriv antal og vælg "ok":</textbox>
+        <div class="amount+button">
+            <input id="pakAmountInput"></input>
+            <button id="pakButton">Ok</button>
+            <script>
+                document.getElementById("pakButton").addEventListener("click", () => {
+
+                });  
+            </script>
+        </div>
+        <div class="table-container">
+            <table class="ware-table">
+                <span id="lastUpdated"></span>
+                <tr>
+                    <th>Produkt</th>
+                    <th>Antal</th>
+                </tr>
+                <script>
+                    let barcode = null;
+
+                    // TODO Put in function from here ...
+                    fetch('api/wares').then(response => response.json()).then(wares => {
+                        const tableBody = document.querySelector('.ware-table');
+                        wares.forEach(
+                            ware => {
+                                const row = document.createElement('tr');
+                                row.innerHTML = `
+                                        <th>
+                                            <button class="clickable" data-barcode="${ware.barcode}">
+                                            ${ware.name}
+                                            </button>
+                                        </th>
+                                        <th>${ware.quantity}</th>
+                                    `;
+                                tableBody.appendChild(row);
+                            });
+                        document.querySelectorAll('.clickable').forEach(button => {
+                            button.addEventListener('click', event => {
+                                barcode = event.target.getAttribute('data-barcode');
+                                console.log(`Selected barcode: ${barcode}`); // Debugging
+                            })
+                        })
+                    })
+                        .catch(error => console.error('Error getting ware data: ', error));
+                    const rightNow = new Date();
+                    document.getElementById("lastUpdated").append(`Sidst opdateret: ${rightNow.toLocaleTimeString()}`);
+                    // ... to here.
+
+
+                    document.getElementById("pakButton").addEventListener('click', async () => {
+                        const amount = (document.getElementById("pakAmountInput").value) * -1;
+                        const result = await updateWare(amount, barcode);
+
+                        // TODO put in function from here...
+                        let existingTempDiv = document.getElementById("tempDiv");
+                        if (existingTempDiv) {
+                            existingTempDiv.remove();
+                        }
+
+                        const tempDiv = document.createElement("div");
+                        tempDiv.id = "tempDiv"
+                        if (result === 200) {
+                            if (tempDiv) {
+                                tempDiv.remove();
+                            }
+                            const ware = await fetch(`api/wares/${barcode}`);
+                            tempDiv.textContent = `${amount * -1} vare er markeret til pakning.`;
+                            const parentElement = document.getElementById("pakButton");
+                            parentElement.after(tempDiv);
+                        }
+                        else if (409) {// Too few wares
+                            if (tempDiv) {
+                                tempDiv.remove();
+                            }
+                            tempDiv.textContent = "Fejl. Ikke nok varer på lager.";
+                            const parentElement = document.getElementById("pakButton");
+                            parentElement.after(tempDiv);
+                        }
+                        // ... to here.
+
+                        // TODO: Put in function from here ...
+                        const response = await fetch('api/wares');
+                        const wares = await response.json();
+
+                        const tableBody = document.querySelector('.ware-table');
+                        tableBody.innerHTML = `
+                     <tr>
+                <th>Produkt</th>
+                <th>Antal</th>
+            </tr>
+        `;
+
+                        wares.forEach(ware => {
+                            const row = document.createElement('tr');
+                            row.innerHTML = `
+                <th>
+                    <button class="clickable" data-barcode="${ware.barcode}">
+                        ${ware.name}
+                    </button>
+                </th>
+                <th>${ware.quantity}</th>
+            `;
+                            tableBody.appendChild(row);
+                        });
+
+                        document.querySelectorAll('.clickable').forEach(button => {
+                            button.addEventListener('click', event => {
+                                barcode = event.target.getAttribute('data-barcode');
+                                console.log(`Selected barcode: ${barcode}`); // Debugging
+                            });
+                        });
+                        // ... to here
+                    })
+                </script>
+            </table>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+<footer>
+    <a href="main.html" id="logo"> <button>Afslut</button>></a>
+</footer>
+
+</html>

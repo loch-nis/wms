@@ -1,10 +1,10 @@
 import {
   Location
-} from "./chunk-JNFGS7YN.js";
+} from "./chunk-5YY4JGXL.js";
 import {
   DOCUMENT,
   isPlatformBrowser
-} from "./chunk-24N65UCO.js";
+} from "./chunk-B7RQN5EG.js";
 import {
   ANIMATION_MODULE_TYPE,
   APP_ID,

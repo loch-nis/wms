@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="styles.css">
+    <title>Lagerstatus</title>
+    <h1>Lagerbeholdning</h1>
+</head>
+<body class = "Lagerstatus">
+    <a href="main.html" id="logo"> <picture>Firmalogo</picture></a>
+    <div class="table-container">
+    <table class="ware-table">
+        
+        <span id = "lastUpdated"></span>
+        <tr>
+            <th>Id</th>
+            <th>Produkt</th>
+            <th>Antal</th>
+            <th>Pris</th>
+            <th>Placering i lager</th>
+        </tr>
+        <script>
+            fetch('api/wares').then(response => response.json()).then(wares => {
+                const tableBody = document.querySelector('.ware-table');
+                wares.forEach(
+                    ware => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <th>${ware.id}</th>
+                            <th>${ware.name}</th>
+                            <th>${ware.quantity}</th>
+                            <th>${ware.price}</th>
+                            <th>${ware.placement_id}</th>
+                        `;
+                        tableBody.appendChild(row);
+                    }
+                )
+            }).catch(error => console.error('Error getting ware data: ', error));
+            const rightNow = new Date();
+            document.getElementById("lastUpdated").append(`Sidst opdateret: ${rightNow.toLocaleTimeString()}`);
+            
+        </script>
+    </table>
+    </div>
+    <script src="scripts/main.js"></script>
+</body>
+<footer>
+    <a href="main.html" id="logo"> <button>Afslut</button>></a>
+    </footer>
+</html>

@@ -14,7 +14,7 @@ export class WareItemComponent implements OnChanges
 
   @Input() barcode: string = "";
   @Input() ware: Ware | null = null;
-  barcodeNotFound: boolean | null = null;
+  barcodeNotFound: boolean | null = null; //FJERN??? mener jeg han gjorde
 
   // todo example:
   status: 'found ' | 'notfound' | 'notSearched' = 'notSearched';

@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { WareItemComponent } from "../ware-item/ware-item.component";
 import { Ware } from '../interfaces/ware';
 import { WareListService } from './ware-list.service';
 import { CommonModule } from '@angular/common';

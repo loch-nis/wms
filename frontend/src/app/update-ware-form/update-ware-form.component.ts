@@ -1,4 +1,4 @@
-import {Component, input, Input} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import { PatchWareService } from './patch-ware.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -18,6 +18,7 @@ export class UpdateWareFormComponent {
   // todo what are signal inputs?
   // todo if we need comments describing the purpose of a variable, is it a good name?
   // todo when do we use comments?
+  
   //if set to false, the form will instead decrease the submitted quantity from the ware.
   @Input() forStoring : boolean = true;
   @Input() barcode : string = "";
@@ -50,11 +51,12 @@ export class UpdateWareFormComponent {
     }).subscribe(
       (response) => {
 
+        console.log(response);
+
         this.snackBar.open("Ware successfully updated!", "Close", {
           duration: 1500
         });
 
-        //trigger update of the list
         this.wareListUpdateService.triggerUpdate();
       }
     );

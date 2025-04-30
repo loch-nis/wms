@@ -4,11 +4,11 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\WareController;
 
 Route::get('/', function () {
-    return file_get_contents(public_path('test.html'));
+    return response()->noContent();
 });
 
 
-//route for creating a ware new and add it to the database
+//route for creating a new ware and add it to the database
 Route::post('/api/wares', [WareController::class, 'store']);
 
 
@@ -16,10 +16,10 @@ Route::post('/api/wares', [WareController::class, 'store']);
 Route::patch('api/wares/{barcode}', [WareController::class, 'update']);
 
 
-//route for getting all wares.
-Route::get('/api/wares', [WareController::class, 'getAllWares']);
+//route for getting all wares. UC3
+Route::get('/api/wares', [WareController::class, 'getAll']);
 
 
 //route for getting ware by barcode
-Route::get('/api/wares/{barcode}', [WareController::class, 'getWareByBarcode']);
+Route::get('/api/wares/{barcode}', [WareController::class, 'getByBarcode']);
 
