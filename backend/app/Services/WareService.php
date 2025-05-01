@@ -15,7 +15,7 @@ class WareService
         $this->uartService = $uartService;
     }
 
-    public function createWare($validatedData)
+    public function createWare(array $validatedData)
     {
         $ware = Ware::create($validatedData);
 
@@ -25,7 +25,7 @@ class WareService
     }
 
 
-    public function updateWare($validatedData, $barcode)
+    public function updateWare(array $validatedData, string $barcode)
     {
         $ware = Ware::where('barcode', $barcode)->firstOrFail();
 

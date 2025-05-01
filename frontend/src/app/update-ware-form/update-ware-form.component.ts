@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, input, Input} from '@angular/core';
 import { PatchWareService } from './patch-ware.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -18,10 +18,11 @@ export class UpdateWareFormComponent {
   // todo what are signal inputs?
   // todo if we need comments describing the purpose of a variable, is it a good name?
   // todo when do we use comments?
-  
+
   //if set to false, the form will instead decrease the submitted quantity from the ware.
-  @Input() forStoring : boolean = true;
-  @Input() barcode : string = "";
+  @Input() isAddingToStock : boolean = true;
+  //@Input() barcode : string = "";
+  barcode = input<string>;//FIX signal input here. And also use for the other variable!!
 
   constructor(
     private formBuilder: FormBuilder,
@@ -41,7 +42,7 @@ export class UpdateWareFormComponent {
 
     let quantityDelta = this.form.value.quantity;
 
-    if(!this.forStoring)
+    if(!this.isAddingToStock)
     {
       quantityDelta = quantityDelta * -1;
     }

@@ -31,7 +31,7 @@ class WareController extends Controller
     }
 
 
-    public function update(UpdateWareRequest $request, $barcode) : JsonResponse
+    public function update(UpdateWareRequest $request, string $barcode) : JsonResponse
     {
         $validated = $request->validated();
 
@@ -50,7 +50,7 @@ class WareController extends Controller
 
 
 
-    public function getByBarcode($barcode) : JsonResponse
+    public function getByBarcode(string $barcode) : JsonResponse
     {
         $ware = $this->wareService->getByBarcode($barcode);
 

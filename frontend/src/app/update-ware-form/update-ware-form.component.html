@@ -10,14 +10,17 @@
       />
     </div>
 
-    <!--      todo what's ngs new control flow syntax?-->
-    @if (forStoring) {
-      <button type="submit">
-        Store ware
-      </button>
-    }
-    <button type="submit" *ngIf="!forStoring">
+  @if (isAddingToStock) 
+  {
+    <button type="submit">
+      Store ware
+    </button>
+  }
+  @if (!isAddingToStock) 
+  {
+    <button type="submit">
       Pack ware
     </button>
+  }
   </form>
 </div>
