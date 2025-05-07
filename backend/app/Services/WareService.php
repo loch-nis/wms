@@ -45,7 +45,7 @@ class WareService
         return Ware::all();
     }
 
-    public function getByBarcode($barcode)
+    public function getByBarcode(string $barcode)
     {
         return Ware::where('barcode', $barcode)->firstOrFail();
     }

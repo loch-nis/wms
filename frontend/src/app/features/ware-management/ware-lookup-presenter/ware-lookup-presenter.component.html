@@ -1,0 +1,48 @@
+<h3>
+    Recently scanned ware:
+</h3>
+
+<div>
+    @if (wareLookupStatus() === "notSearched")
+    {
+        Scan or type in barcode below.
+    }
+    @else if (wareLookupStatus() === "found") 
+    {
+        <app-ware-item
+        [ware]="ware()"
+        [wareLookupStatus]="wareLookupStatus()"
+        ></app-ware-item>
+        
+        <h4>
+            Store this ware:
+        </h4>
+
+        <app-update-ware-form
+        action="add"
+        [barcode]="barcode()"
+        ></app-update-ware-form>
+    } 
+    @else if (wareLookupStatus() === "notFound") 
+    {
+        <p>
+            Barcode not found in database. Create a new ware?
+        </p>
+        <app-create-ware-form
+        [barcode]="barcode()"
+        [submitFunction]="submitFunction()"
+        ></app-create-ware-form>
+    }
+</div>
+
+
+<h3>
+    Input barcode manually:
+</h3>
+<div>
+    <app-barcode-form
+    [(barcode)]="barcode"
+    ></app-barcode-form>
+</div>    
+
+

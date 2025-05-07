@@ -1,0 +1,26 @@
+<div class="form-container">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+    <div class="form-field">
+      <label for="quantity">Quantity</label>
+      <input
+        type="number"
+        min="1"
+        max="1000"
+        id="quantity"
+        formControlName="quantity"
+      />
+    </div>
+
+  
+
+  @if (action() === "add") 
+  {
+    <button type="submit" [disabled]="form.invalid">Store ware</button>
+  }
+  @else if (action() === "remove") 
+  {
+    <button type="submit" [disabled]="form.invalid">Pack ware</button>
+  }
+  </form>
+</div>

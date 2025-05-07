@@ -1,0 +1,20 @@
+<header>
+    <h1>Warehouse Overview</h1>
+</header>
+
+<main>
+    <div>
+        <app-ware-lookup
+        [(barcode)]="barcode"
+        [ware]="ware()"
+        [wareLookupStatus]="wareLookupStatus()"
+        [submitFunction]="handleWareFormSubmit"
+        ></app-ware-lookup>   
+    </div>
+    <div>
+        <app-ware-list
+        [wares]="wares()"
+        ></app-ware-list>
+    </div>
+    
+</main>

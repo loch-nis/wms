@@ -1,0 +1,32 @@
+<h3>
+    Warehouse wares (change later):
+</h3>
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Barcode</th>
+            <th>Price</th>
+            <th>Quantity</th>
+        </tr>
+    </thead>
+    <tbody>
+         @for (ware of wares(); track ware.barcode)
+         {
+             <tr>
+                 <td>{{ ware.name }}</td>
+                 <td>{{ ware.barcode }}</td>
+                 <td> ${{ ware.price }}</td>
+                 <td>{{ ware.quantity }}</td>
+                 <td> <app-update-ware-form 
+                     action="remove"
+                     [barcode]="ware.barcode"
+                     ></app-update-ware-form> </td>
+             </tr>
+        } @empty {
+            <div>
+                No wares found in database. Possible error.
+            </div>
+        }
+    </tbody>
+</table>
