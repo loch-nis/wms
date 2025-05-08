@@ -28,7 +28,6 @@ class UpdateWareRequest extends FormRequest
                 'integer',
                 'min:-1000',
                 'max:1000',
-                //inline closure function which checks if there are enough wares to pack
                 function ($attribute, $value, $fail) {
                     $ware = Ware::where('barcode', $this->route('barcode'))->firstOrFail();
 

@@ -1,10 +1,9 @@
-import { Component, signal, effect, inject, computed } from '@angular/core';
-import { Ware } from '../../../core/models/ware.model';
+import { Component, signal, inject, computed } from '@angular/core';
 import { WareListPresenterComponent } from '../ware-list-presenter/ware-list-presenter.component';
 import { WareLookupPresenterComponent } from '../ware-lookup-presenter/ware-lookup-presenter.component';
 import { rxResource } from '@angular/core/rxjs-interop';
-import { ResourceStatus } from '@angular/core';
 import { WareService } from './ware.service';
+import { Ware, WareUpdateAction, WareLookupStatus } from '../../../core/models/ware.model';
 
 @Component({
   selector: 'app-dashboard',
@@ -13,59 +12,29 @@ import { WareService } from './ware.service';
   styleUrl: './ware-management-container.component.scss'
 })
 export class WareManagementContainerComponent {
-  wares = signal<Ware[]>([]);
-
   barcode = signal<string>("");
-  ware = signal<Ware | null | undefined>(undefined);
-  wareLookupStatus = computed(() => 
-  {
-    if (this.ware() === undefined)
+  
+  lookedUpWare = computed<Ware | null>(() => {
+    return this.lookedUpWareResource.hasValue() ? this.lookedUpWareResource.value() : null;
+  });
+  
+  wareLookupStatus = computed<WareLookupStatus>(() => {
+    if (this.barcode() === "")
       return 'notSearched';
-    else if (this.ware() === null)
+    else if (this.lookedUpWare() === null)
       return 'notFound';
     else
       return 'found';
-  })
+});
 
-
-
-  constructor() 
-  {
-    effect(() => {
-      console.log("wareLookup effect triggered");
-
-      if (this.barcode() == "") 
-        return;
-
-      // TODO make this more safe or something? - 
-      // TODO actually I think the loader should just call a function (using pipe??)
-      // TODO so we dont need effect. And maybe .then or something can be used so we dont have to check
-      // TODO for resolved.
-
-      // TODO add debouncing
-      if (this.wareResource.status() === ResourceStatus.Error)
-      {  
-        this.ware.set(null);
-      }
-      else if (this.wareResource.status() === ResourceStatus.Resolved)
-      {
-        this.ware.set(this.wareResource.value());
-      }
-    });   
-    
-    effect(() => {
-      console.log("wareList effect triggered");
-      if (this.wareListResource.status() !== ResourceStatus.Resolved) return
-      if (this.wareListResource.hasValue())
-        this.wares.set(this.wareListResource.value());
-    });
-  }
+  wareList = computed<Ware[] | []>(() => {
+    return this.wareListResource.hasValue() ? this.wareListResource.value() : []
+  });
 
 
   private wareService = inject(WareService);
 
-  // TODO perhaps refactor this based on the above comments??
-  wareResource = rxResource({
+  lookedUpWareResource = rxResource({
     request: () => this.barcode(),
     loader: ({ request: barcode }) => 
       this.wareService.getByBarcode(barcode)
@@ -80,12 +49,37 @@ export class WareManagementContainerComponent {
 
   handleWareFormSubmit = (formValue : any) => {
     this.wareService.post(formValue).subscribe({
-      next: () => this.wareListResource.reload()
+      next: () => {
+        this.wareListResource.reload();
+        this.lookedUpWareResource.reload();
+      }
     });
-    // error handling how??? I kinda don't want it here in the component, 
+    // TODO error handling how??? I kinda don't want it here in the component, 
     // so I guess the wareService method should do that instead? Or perhaps not actually,
     // if I want the ui to update or a snackbar or smt to appear
 
+  }
+
+
+  handleWareUpdateFormSubmit = (action: WareUpdateAction, barcode: string, quantityDelta : number) => {
+    if (action === "decreaseQuantity")
+      quantityDelta *= -1;
+    
+    this.wareService.patch(barcode, quantityDelta).subscribe({
+      next: () => {
+        this.wareListResource.reload();
+        this.lookedUpWareResource.reload();
+    }
+    });
+  }
+
+  handleWareDeleteSubmit = (barcode: string) => {
+    this.wareService.delete(barcode).subscribe({
+      next: () => {
+        this.wareListResource.reload();
+        this.lookedUpWareResource.reload();
+      }
+    });
   }
 
 

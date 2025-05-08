@@ -1,10 +1,7 @@
 import { Component, effect, input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
-import { CreateWareService } from './create-ware.service';
 import { CommonModule } from '@angular/common';
-import { WareListUpdateService } from '../ware-list-presenter/ware-list-update.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 @Component({
@@ -15,7 +12,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class WareFormPresenterComponent{
   barcode = input<string>("");
-  submitFunction = input<(formValue : any) => void>(() => {});
+  submitWareFunction = input<(formValue : any) => void>(() => {});
 
   form: FormGroup;
   placementOptions = [1, 2, 3, 4, 5];
@@ -43,6 +40,6 @@ export class WareFormPresenterComponent{
   {
     if(this.form.invalid) return;
 
-    this.submitFunction()(this.form.value);
+    this.submitWareFunction()(this.form.value);
   }
 }

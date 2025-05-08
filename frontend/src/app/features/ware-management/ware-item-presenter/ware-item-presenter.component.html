@@ -1,10 +1,9 @@
 @if (wareLookupStatus() === "found")
 {
     <div> <!-- TODO REMOVE NULL SPRESSION!!!! (or wait what is the ??? called???) -->
-        Name: {{ ware()?.name }} <br>
-        Barcode: {{ ware()?.barcode }} <br>
-        Price: ${{ ware()?.price }} <br>
-        Quantity: {{ ware()?.quantity }} <br>
+        Name: {{ lookedUpWare()?.name }} <br>
+        Barcode: {{ lookedUpWare()?.barcode }} <br>
+        Price: ${{ lookedUpWare()?.price }} <br>
+        Quantity: {{ lookedUpWare()?.quantity }} <br>
     </div>
-} 
-<!-- TODO display the create ware form here or do that from the recentlyscanned? -->
+}

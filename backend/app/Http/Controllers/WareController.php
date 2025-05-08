@@ -56,5 +56,13 @@ class WareController extends Controller
 
         return response()->json($ware,200);
     }
+
+
+    public function delete(string $barcode) : JsonResponse
+    {
+        $ware = $this->wareService->delete($barcode);
+
+        return response()->json($ware,200);
+    }
 }
 

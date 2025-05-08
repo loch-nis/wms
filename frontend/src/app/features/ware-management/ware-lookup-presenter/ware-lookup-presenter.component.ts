@@ -1,9 +1,9 @@
-import { Component, signal, effect, inject, input, ResourceStatus, model } from '@angular/core';
-import { Ware } from '../../../core/models/ware.model';
+import { Component, input, model } from '@angular/core';
+import { Ware, WareLookupStatus, WareUpdateAction } from '../../../core/models/ware.model';
 import { BarcodeFormPresenterComponent } from '../barcode-form-presenter/barcode-form-presenter.component';
 import { WareFormPresenterComponent } from '../ware-form-presenter/ware-form-presenter.component';
 import { WareItemPresenterComponent } from '../ware-item-presenter/ware-item-presenter.component';
-import { WareUpdateFormPresenterComponent } from '../../../shared/ware-update-form-presenter/ware-update-form-presenter.component';
+import { WareUpdateFormPresenterComponent } from '../components/ware-update-form-presenter/ware-update-form-presenter.component';
 
 @Component({
   selector: 'app-ware-lookup',
@@ -14,8 +14,8 @@ import { WareUpdateFormPresenterComponent } from '../../../shared/ware-update-fo
 })
 export class WareLookupPresenterComponent {
   barcode = model<string>("");
-  ware = input<Ware | null | undefined>(undefined);
-  wareLookupStatus = input< 'found' | 'notFound' | 'notSearched'>('notSearched');
-
-  submitFunction = input<(formValue : any) => void>(() => {});
+  lookedUpWare = input<Ware | null>(null);
+  wareLookupStatus = input<WareLookupStatus>("notSearched");
+  submitWareFunction = input<(formValue : any) => void>(() => {});
+  submitWareUpdateFunction = input<(action: WareUpdateAction, barcode: string, quantityDelta: number) => void>(() => {});
 }

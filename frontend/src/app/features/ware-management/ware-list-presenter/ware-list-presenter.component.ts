@@ -1,39 +1,17 @@
-import { Component, OnInit, input } from '@angular/core';
-import { Ware } from '../../../core/models/ware.model';
-import { WareListService } from './ware-list.service';
+import { Component, input } from '@angular/core';
+import { Ware, WareUpdateAction } from '../../../core/models/ware.model';
 import { CommonModule } from '@angular/common';
-import { WareUpdateFormPresenterComponent } from '../../../shared/ware-update-form-presenter/ware-update-form-presenter.component';
-import { WareListUpdateService } from './ware-list-update.service';
+import { WareUpdateFormPresenterComponent } from '../components/ware-update-form-presenter/ware-update-form-presenter.component';
+import { WareDeleteButtonPresenterComponent } from "../ware-delete-button-presenter/ware-delete-button-presenter.component";
 
 @Component({
   selector: 'app-ware-list',
-  imports: [CommonModule, WareUpdateFormPresenterComponent],
+  imports: [CommonModule, WareUpdateFormPresenterComponent, WareDeleteButtonPresenterComponent],
   templateUrl: './ware-list-presenter.component.html',
   styleUrl: './ware-list-presenter.component.scss'
 })
-export class WareListPresenterComponent{// implements OnInit {
+export class WareListPresenterComponent{
   wares = input<Ware[]>([]);
-/*
-  constructor(
-    private wareListService : WareListService,
-    private wareListUpdateService: WareListUpdateService,
-  ) {}
-
-  loadWares() : void
-  {
-    this.wareListService.getAllWares().subscribe((data) => {
-      this.wares = data;
-      });
-  }
-
-  ngOnInit(): void 
-  {
-    this.loadWares();
-
-    this.wareListUpdateService.update$.subscribe(() => {
-      this.loadWares();
-    });
-  }
-
-*/
+  submitWareUpdateFunction = input<(action: WareUpdateAction, barcode: string, quantityDelta: number) => void>(() => {});
+  submitWareDeleteFunction = input<(barcode: string) => void>(() => {});
 }

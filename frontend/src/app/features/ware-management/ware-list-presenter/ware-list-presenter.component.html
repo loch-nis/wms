@@ -18,10 +18,16 @@
                  <td>{{ ware.barcode }}</td>
                  <td> ${{ ware.price }}</td>
                  <td>{{ ware.quantity }}</td>
-                 <td> <app-update-ware-form 
-                     action="remove"
-                     [barcode]="ware.barcode"
+                 <td> <app-update-ware-form
+                    [action]='"decreaseQuantity"'
+                    [barcode]="ware.barcode"
+                    [submitFunction]="submitWareUpdateFunction()"
                      ></app-update-ware-form> </td>
+
+                <td> <app-ware-delete-button
+                    [barcode]="ware.barcode"
+                    [submitFunction]="submitWareDeleteFunction()"
+                    ></app-ware-delete-button> </td>
              </tr>
         } @empty {
             <div>

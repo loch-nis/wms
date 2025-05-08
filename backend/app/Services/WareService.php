@@ -51,4 +51,14 @@ class WareService
     }
 
 
+    public function delete(string $barcode)
+    {
+        $ware = Ware::where('barcode', $barcode)->firstOrFail();
+
+        $ware->delete();
+
+        return $ware;
+    }
+
+
 }

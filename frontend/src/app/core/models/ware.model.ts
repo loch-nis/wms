@@ -1,5 +1,3 @@
-// todo how should we structure our code?
-// todo split by technical concerns vs features
 export interface Ware {
     id: number,
     barcode: string,
@@ -10,3 +8,7 @@ export interface Ware {
     created_at: string | null,
     updated_at: string | null,
   }
+
+  export type WareLookupStatus = 'notSearched' | 'notFound' | 'found';
+
+  export type WareUpdateAction = "increaseQuantity" | "decreaseQuantity";

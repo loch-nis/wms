@@ -6,14 +6,17 @@
     <div>
         <app-ware-lookup
         [(barcode)]="barcode"
-        [ware]="ware()"
+        [lookedUpWare]="lookedUpWare()"
         [wareLookupStatus]="wareLookupStatus()"
-        [submitFunction]="handleWareFormSubmit"
+        [submitWareFunction]="handleWareFormSubmit"
+        [submitWareUpdateFunction]="handleWareUpdateFormSubmit"
         ></app-ware-lookup>   
     </div>
     <div>
         <app-ware-list
-        [wares]="wares()"
+        [wares]="wareList()"
+        [submitWareDeleteFunction]="handleWareDeleteSubmit"
+        [submitWareUpdateFunction]="handleWareUpdateFormSubmit"
         ></app-ware-list>
     </div>
     

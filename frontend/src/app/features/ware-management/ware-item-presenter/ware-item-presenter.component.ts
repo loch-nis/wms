@@ -1,5 +1,5 @@
 import {Component, input} from '@angular/core';
-import { Ware } from '../../../core/models/ware.model';
+import { Ware, WareLookupStatus } from '../../../core/models/ware.model';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -10,6 +10,6 @@ import { CommonModule } from '@angular/common';
 })
 export class WareItemPresenterComponent
 {
-  ware = input<Ware | null | undefined>(undefined);
-  wareLookupStatus = input< 'found' | 'notFound' | 'notSearched'>('notSearched');
+  lookedUpWare = input<Ware | null>(null);
+  wareLookupStatus = input<WareLookupStatus>('notSearched');
 }

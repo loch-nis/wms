@@ -10,7 +10,7 @@
     @else if (wareLookupStatus() === "found") 
     {
         <app-ware-item
-        [ware]="ware()"
+        [lookedUpWare]="lookedUpWare()"
         [wareLookupStatus]="wareLookupStatus()"
         ></app-ware-item>
         
@@ -19,8 +19,9 @@
         </h4>
 
         <app-update-ware-form
-        action="add"
+        [action]='"increaseQuantity"'
         [barcode]="barcode()"
+        [submitFunction]="submitWareUpdateFunction()"
         ></app-update-ware-form>
     } 
     @else if (wareLookupStatus() === "notFound") 
@@ -30,7 +31,7 @@
         </p>
         <app-create-ware-form
         [barcode]="barcode()"
-        [submitFunction]="submitFunction()"
+        [submitWareFunction]="submitWareFunction()"
         ></app-create-ware-form>
     }
 </div>

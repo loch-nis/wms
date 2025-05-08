@@ -1,0 +1,23 @@
+<form (ngSubmit)="onSubmit()">
+
+    <label for="quantityDelta">Quantity</label>
+    <input
+      type="number"
+      min="1"
+      max="1000"
+      id="quantityDelta"
+      name="quantityDelta"
+      required
+      [(ngModel)]="quantityDelta"
+    />
+
+@if (action() === "increaseQuantity") 
+{
+  <button type="submit">Store ware</button>
+}
+@else if (action() === "decreaseQuantity") 
+{
+  <button type="submit">Pack ware</button>
+}
+
+</form>
