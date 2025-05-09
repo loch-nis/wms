@@ -36,7 +36,7 @@ export class WareManagementContainerComponent {
   private wareService = inject(WareService);
   private notificationService = inject(NotificationService);
 
-  // should the rxResource logic go in a service instead? Or is this fine?
+  
   lookedUpWareResource = rxResource({
     request: () => this.barcode(),
     loader: ({ request: barcode }) => 
@@ -58,7 +58,6 @@ export class WareManagementContainerComponent {
         this.notificationService.showSuccess("New ware successfully created");
       }
     });
-    // TODO error handling how??? I kinda don't want it here in the component. Error handling service? Here or in wareservice?
   }
 
 

@@ -2,7 +2,9 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
 import { Ware } from '../../../core/models/ware.model';
-import { Observable } from 'rxjs';
+import { EMPTY, Observable } from 'rxjs';
+import { NotificationService } from '../../../core/services/notification.service';
+import { catchError, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -10,12 +12,16 @@ import { Observable } from 'rxjs';
 export class WareService {
 
   private http = inject(HttpClient);
+  private notificatonService = inject(NotificationService);
 
 
-  
   getAll() : Observable<Ware[]>
   {
-    return this.http.get<Ware[]>(`${environment.apiUrl}`);
+    return this.http.get<Ware[]>(`${environment.apiUrl}`).pipe(catchError(error => {
+      this.notificatonService.showError("Error: failed getting all wares");
+      console.error(error);
+      return EMPTY;
+    }));
   }
 
   getByBarcode(barcode: string) : Observable<Ware>
@@ -25,22 +31,33 @@ export class WareService {
 
   post(data : any) : Observable<object>
   {
-    return this.http.post(`${environment.apiUrl}`, data);
+    return this.http.post(`${environment.apiUrl}`, data).pipe(catchError(error => {
+      this.notificatonService.showError("Error: failed creating new ware");
+      console.error(error);
+      return EMPTY;
+    }));
   }
 
   patch(barcode: string, quantityDelta : any) : Observable<object>
   {
     const data = { quantityDelta };
-    return this.http.patch(`${environment.apiUrl}/${barcode}`, data);
-    // TODO ????? add error handling, perhaps using snackbars like above
-
-    // TODO ALSO should the notfiication esrvice triggered from here or the component?? nok compnoent
+    return this.http.patch(`${environment.apiUrl}/${barcode}`, data).pipe(catchError(error => {
+      if (error.status === 422)
+        this.notificatonService.showError("Error: likely quantity too low to process packing order");
+      else
+        this.notificatonService.showError("Error: failed updating ware");
+      return EMPTY;
+    }));
   }
 
 
   delete(barcode: string) : Observable<object>
   {
-    return this.http.delete(`${environment.apiUrl}/${barcode}`);
+    return this.http.delete(`${environment.apiUrl}/${barcode}`).pipe(catchError(error => {
+      this.notificatonService.showError("Error: failed deleting ware");
+      console.error(error);
+      return EMPTY;
+    }));
   }
 
 }
