@@ -1,16 +1,18 @@
-<h3>
-    Warehouse wares (change later):
+<h3 class="text-xl font-semibold text-gray-800 mb-4 mt-4">
+    List of Warehouse Wares:
 </h3>
-<table>
-    <thead>
+<table class="min-w-full w-3xl table-auto border-collapse bg-white shadow-md">
+    <thead class="bg-gray-200">
         <tr>
             <th>Name</th>
             <th>Barcode</th>
             <th>Price</th>
             <th>Quantity</th>
+            <th class="w-1/5">Number of wares to pack</th>
+            <th>Delete</th>
         </tr>
     </thead>
-    <tbody>
+    <tbody class="text-m">
          @for (ware of wares(); track ware.barcode)
          {
              <tr>

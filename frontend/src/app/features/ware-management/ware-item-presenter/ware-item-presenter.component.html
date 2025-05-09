@@ -1,6 +1,6 @@
 @if (wareLookupStatus() === "found")
 {
-    <div> <!-- TODO REMOVE NULL SPRESSION!!!! (or wait what is the ??? called???) -->
+    <div> <!-- TODO is optional chaining here bad practice? Or can/should I even avoid it?-->
         Name: {{ lookedUpWare()?.name }} <br>
         Barcode: {{ lookedUpWare()?.barcode }} <br>
         Price: ${{ lookedUpWare()?.price }} <br>

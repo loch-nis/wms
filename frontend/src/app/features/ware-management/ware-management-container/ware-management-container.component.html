@@ -1,9 +1,9 @@
 <header>
-    <h1>Warehouse Overview</h1>
+    <h1 class="text-4xl font-semibold text-gray-800 mb-4 mt-4">Warehouse Overview</h1>
 </header>
 
 <main>
-    <div>
+    <div class="flex">
         <app-ware-lookup
         [(barcode)]="barcode"
         [lookedUpWare]="lookedUpWare()"
@@ -15,8 +15,8 @@
     <div>
         <app-ware-list
         [wares]="wareList()"
-        [submitWareDeleteFunction]="handleWareDeleteSubmit"
         [submitWareUpdateFunction]="handleWareUpdateFormSubmit"
+        [submitWareDeleteFunction]="handleWareDeleteSubmit"
         ></app-ware-list>
     </div>
     

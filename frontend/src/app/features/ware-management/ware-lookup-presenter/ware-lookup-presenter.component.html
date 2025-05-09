@@ -1,11 +1,13 @@
-<h3>
+<h3 class="text-xl font-semibold text-gray-800 mb-4">
     Recently scanned ware:
 </h3>
 
 <div>
     @if (wareLookupStatus() === "notSearched")
     {
-        Scan or type in barcode below.
+        <div class="mb-4">
+            Scan or type in barcode below.
+        </div>
     }
     @else if (wareLookupStatus() === "found") 
     {
@@ -14,8 +16,8 @@
         [wareLookupStatus]="wareLookupStatus()"
         ></app-ware-item>
         
-        <h4>
-            Store this ware:
+        <h4 class="text-xl font-semibold mb-4 mt-2">
+            Number of wares to store:
         </h4>
 
         <app-update-ware-form
@@ -26,7 +28,9 @@
     } 
     @else if (wareLookupStatus() === "notFound") 
     {
-        <p>
+        <p
+        class="mb-2"
+        >
             Barcode not found in database. Create a new ware?
         </p>
         <app-create-ware-form
@@ -37,7 +41,7 @@
 </div>
 
 
-<h3>
+<h3 class="text-xl font-semibold mb-4">
     Input barcode manually:
 </h3>
 <div>

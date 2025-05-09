@@ -4,6 +4,7 @@ import { WareLookupPresenterComponent } from '../ware-lookup-presenter/ware-look
 import { rxResource } from '@angular/core/rxjs-interop';
 import { WareService } from './ware.service';
 import { Ware, WareUpdateAction, WareLookupStatus } from '../../../core/models/ware.model';
+import { NotificationService } from '../../../core/services/notification.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -25,15 +26,17 @@ export class WareManagementContainerComponent {
       return 'notFound';
     else
       return 'found';
-});
+  });
 
   wareList = computed<Ware[] | []>(() => {
-    return this.wareListResource.hasValue() ? this.wareListResource.value() : []
+    return this.wareListResource.hasValue() ? this.wareListResource.value() : [];
   });
 
 
   private wareService = inject(WareService);
+  private notificationService = inject(NotificationService);
 
+  // should the rxResource logic go in a service instead? Or is this fine?
   lookedUpWareResource = rxResource({
     request: () => this.barcode(),
     loader: ({ request: barcode }) => 
@@ -52,12 +55,10 @@ export class WareManagementContainerComponent {
       next: () => {
         this.wareListResource.reload();
         this.lookedUpWareResource.reload();
+        this.notificationService.showSuccess("New ware successfully created");
       }
     });
-    // TODO error handling how??? I kinda don't want it here in the component, 
-    // so I guess the wareService method should do that instead? Or perhaps not actually,
-    // if I want the ui to update or a snackbar or smt to appear
-
+    // TODO error handling how??? I kinda don't want it here in the component. Error handling service? Here or in wareservice?
   }
 
 
@@ -69,6 +70,7 @@ export class WareManagementContainerComponent {
       next: () => {
         this.wareListResource.reload();
         this.lookedUpWareResource.reload();
+        this.notificationService.showSuccess("Ware successfully updated");
     }
     });
   }
@@ -78,11 +80,10 @@ export class WareManagementContainerComponent {
       next: () => {
         this.wareListResource.reload();
         this.lookedUpWareResource.reload();
+        this.notificationService.showSuccess("Ware successfully deleted");
       }
     });
   }
-
-
 
 
 }

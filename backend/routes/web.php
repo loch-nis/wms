@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\WareController;
 
 Route::get('/', function () {
-    return redirect('/main.html');
+    return response()->json();
 });
 
 Route::post('/api/wares', [WareController::class, 'store']);
